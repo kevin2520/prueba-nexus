@@ -1,0 +1,76 @@
+<div class="content-page">
+  <!-- Start content -->
+  <div class="content">
+    <div class="container-fluid">
+
+      <section style="overflow-x:auto;">
+        <h2 class="text-center display-4 ">Cargos</h2>
+        <!-- Button trigger modal -->
+        <button type="button"  class="btn btn-outline-warning m-5" data-toggle="modal"
+          data-target="#actualizarCargos">
+          Crear Cargo
+        </button>
+        <!-- Modal -->
+
+        <div *ngIf="cargos">
+          <table class="table table-hover border border-1">
+            <thead class="text-center text-dark">
+              <th>Nombre</th>
+              <th>Descripcion</th>
+              <th>Acción</th>
+            </thead>
+            <tbody>
+              <tr *ngFor='let cargo of cargos; let i = index;' class="text-center">
+                <td>{{cargo.nombre}}</td>
+                <td>{{cargo.descripcion}}</td>
+
+                <td class="">
+                  <button class="btn btn-outline-info mr-2" (click)="editar(cargo)" data-toggle="modal" data-target="#actualizarCargos">editar</button>
+                  <button class="btn btn-outline-danger" (click)="eliminar(cargo.id)" >eliminar</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div *ngIf="!cargos">
+          No se encontrarón Cargos !!!
+        </div>
+      </section>
+
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="actualizarCargos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header bg-info">
+            <h5 class="modal-title text-white" id="exampleModalLabel">{{cargosForm.get('id').value ? 'Actualizar Cargo':'Crear Cargo' }}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form class="px-5" [formGroup]="cargosForm" class="px-5" (ngSubmit)="guardar()">
+              <div class="form-group">
+                <label for="nombre" class=" control-label">Nombre </label>
+                <input type="text" name="nombre" id="nombre" formControlName="nombre" placeholder="nombre cargo" class="form-control">
+              </div>
+
+              <div class="form-group">
+                <label for="descripcion" class=" control-label">Descripcion cargo</label>
+                <input type="text" name="descripcion" id="descripcion" formControlName="descripcion" placeholder="descripcion cargo" class="form-control">
+              </div>
+
+              <div class="form-group text-center">
+                <button type="button" class="btn btn-info " (click)="guardar()" data-dismiss="modal" [disabled]="cargosForm.invalid">
+                  {{cargosForm.get('id').value ? 'Actualizar Cargo':'Crear' }}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--  modal-->
+  </div>
+</div>

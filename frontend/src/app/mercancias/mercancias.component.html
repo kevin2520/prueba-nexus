@@ -1,0 +1,96 @@
+<div class="content-page">
+  <!-- Start content -->
+  <div class="content">
+    <div class="container-fluid">
+
+      <section style="overflow-x:auto;">
+        <h2 class="text-center display-4 ">Mercancias</h2>
+        <!-- Button trigger modal -->
+        <button type="button"  class="btn btn-outline-warning m-5" data-toggle="modal"
+          data-target="#actualizarMercancias">
+          Crear Mercancia
+        </button>
+        <div class="form-group">
+          <label for="filtro" class=" control-label">Filtrar por nombre Producto</label>
+          <input type="text" name="filtro" id="filtro" [formControl]="filtro" placeholder="filtrar por nombre producto" class="form-control">
+        </div>
+        <!-- Modal -->
+
+        <div *ngIf="mercancias">
+          <table class="table table-hover border border-1">
+            <thead class="text-center text-dark">
+              <th>Nombre Producto</th>
+              <th>Cantidad</th>
+              <th>Fecha Ingreso</th>
+              <th>Creado por</th>
+              <th>Fecha Creacion</th>
+              <th>Modificado por</th>
+              <th>Fecha Modificacion</th>
+              <th>Acción</th>
+            </thead>
+            <tbody>
+              <tr *ngFor='let mercancias of mercancias; let i = index;' class="text-center">
+                <td>{{mercancias.nombreProducto}}</td>
+                <td>{{mercancias.cantidad}}</td>
+                <td>{{mercancias.fechaIngreso | date}}</td>
+                <td>{{mercancias.creadoPor}}</td>
+                <td>{{mercancias.fechaCreacion | date}}</td>
+                <td>{{mercancias.modificadoPor}}</td>
+                <td>{{mercancias.fechaModificacion | date}}</td>
+
+
+                <td class="">
+                  <button class="btn btn-outline-info mr-2" (click)="editar(mercancias)" data-toggle="modal" data-target="#actualizarMercancias"
+                    *ngIf="isInCargo('Administrador')">editar</button>
+                  <button class="btn btn-outline-danger" (click)="eliminar(mercancias.id)" >eliminar</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div *ngIf="!mercancias">
+          No se encontrarón Mercancias !!!
+        </div>
+      </section>
+
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="actualizarMercancias" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header bg-info">
+            <h5 class="modal-title text-white" id="exampleModalLabel">{{mercanciasForm.get('id').value ? 'Actualizar Mercancia':'Crear Mercancia' }}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form class="px-5" [formGroup]="mercanciasForm" class="px-5" (ngSubmit)="guardar()">
+              <div class="form-group">
+                <label for="nombreProducto" class=" control-label">Nombre Producto</label>
+                <input type="text" name="nombreProducto" id="nombreProducto" formControlName="nombreProducto" placeholder="nombre producto" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="cantidad" class=" control-label">Cantidad</label>
+                <input type="number" name="cantidad" id="cantidad" formControlName="cantidad" placeholder="cantidad"
+                  class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="fechaIngreso" class=" control-label">Fecha Ingreso</label>
+                <input type="date" name="fechaIngreso" max="{{ maxDate}}" id="fechaIngreso" formControlName="fechaIngreso" placeholder="fecha ingreso"
+                  class="form-control">
+              </div>
+              <div class="form-group text-center">
+                <button type="button" class="btn btn-info " (click)="guardar()" data-dismiss="modal" [disabled]="mercanciasForm.invalid">
+                  {{mercanciasForm.get('id').value ? 'Actualizar Mercancia':'Crear' }}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--  modal-->
+  </div>
+</div>

@@ -1,0 +1,83 @@
+<div class="content-page">
+  <!-- Start content -->
+  <div class="content">
+    <div class="container-fluid">
+
+      <section style="overflow-x:auto;">
+        <h2 class="text-center display-4 ">Usuarios</h2>
+        <div *ngIf="usuarios">
+          <table class="table table-hover border border-1">
+            <thead class="text-center text-dark">
+              <th>Id</th>
+              <th>Cédula</th>
+              <th>Nombre</th>
+              <th>email</th>
+              <th>Acción</th>
+            </thead>
+            <tbody>
+              <tr *ngFor='let usuario of usuarios;let i =index' class="text-center">
+                <td>{{usuario.id}}</td>
+                <td>{{usuario.cedula}}</td>
+                <td>{{usuario.nombre}}</td>
+                <td>{{usuario.email}}</td>
+                <td class="" >
+                  <button [disabled]="!isInCargo('Administrador') " class="btn btn-outline-info mr-2" (click)="editar(usuario)"
+                    data-toggle="modal" data-target="#actualizarUsuarios">editar</button>
+                  <button [disabled]="!isInCargo('Administrador')" type="button" class=" btn btn-outline-danger" (click)="eliminar(usuario.id)">eliminar</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div *ngIf="!usuarios">
+          No se encontrarón Usuarios!!!
+        </div>
+      </section>
+      <!-- Modal -->
+      <div class="modal fade" id="actualizarUsuarios" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header bg-info">
+              <h5 class="modal-title text-white" id="exampleModalLabel">Actualizar usuarios</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form class="px-5">
+                <div class="form-group">
+                  <label for="cedula" class=" control-label">Cédula</label>
+                  <input type="text" name="cedula" id="cedula" [(ngModel)]="selectedUsuario.cedula" placeholder="cedula"
+                    class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="nombre" class=" control-label">nombre</label>
+                  <input type="text" name="nombre" id="nombre" [(ngModel)]="selectedUsuario.nombre" placeholder="nombre"
+                    class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="email" class=" control-label">Correo</label>
+                  <input type="text" name="email" id="email" [(ngModel)]="selectedUsuario.email" placeholder="email"
+                    class="form-control">
+                </div>
+
+                <div class="form-group">
+                  <label for="email" class=" control-label">Edad</label>
+                  <input type="number" name="edad" id="edad" [(ngModel)]="selectedUsuario.edad" placeholder="edad"
+                         class="form-control">
+                </div>
+
+                <div class="form-group text-center">
+                  <button class="btn btn-info " (click)="guardar()" data-dismiss="modal">actualizar</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--  modal-->
+    </div>
+  </div>
+
+</div>
